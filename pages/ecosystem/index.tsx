@@ -23,6 +23,7 @@ export const getServerSideProps = async ({ req, locale }: GetServerSidePropsCont
 
   const { projects, categories } = await getSHMProjects();
   const upvotedProjectsData = await getUserUpvotedProjects(session?.user?.id || "");
+  const locssr = await serverSideTranslations(locale as string, ["common"]);
   return {
     // Will be passed to the page component as props
     props: {
@@ -30,6 +31,7 @@ export const getServerSideProps = async ({ req, locale }: GetServerSidePropsCont
       categories,
       upvotedProjectIds: upvotedProjectsData?.upvotedProjectIds ?? [],
       sessionObject: session,
+      ...locssr,
     },
   };
 };
